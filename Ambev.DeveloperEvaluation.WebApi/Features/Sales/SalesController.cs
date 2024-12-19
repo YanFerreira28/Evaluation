@@ -1,19 +1,16 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Application.Sale.CancelledItem;
+using Ambev.DeveloperEvaluation.Application.Sale.CancelledSale;
+using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelledItem;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelledSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
-using Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
 
-/// <summary>
-/// Controller for managing user operations
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class SalesController : BaseController
@@ -21,25 +18,12 @@ public class SalesController : BaseController
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    /// <summary>
-    /// Initializes a new instance of UsersController
-    /// </summary>
-    /// <param name="mediator">The mediator instance</param>
-    /// <param name="mapper">The AutoMapper instance</param>
     public SalesController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
     }
 
-    //[HttpGet("{id}")]
-    //public async Task<IActionResult> GetById(Guid id)
-    //{
-    //    var sale = await _saleRepository.GetByIdAsync(id);
-    //    if (sale == null) return NotFound();
-
-    //    return Ok(sale);
-    //}
 
     [HttpPost]
     public async Task<IActionResult> CreateSale(CreateSaleRequest request, CancellationToken cancellationToken)
@@ -63,6 +47,60 @@ public class SalesController : BaseController
             });
         }
         catch(Exception ex)
+        {
+            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
+            });
+        }
+    }
+
+    [HttpPatch("Cancel/{saleId}")]
+    public async Task<IActionResult> CancelSale(Guid saleId, CancellationToken cancellationToken)
+    {
+        try
+        {
+
+            var command = new CancelledSaleCommand() { SaleId = saleId };
+            var response = await _mediator.Send(command, cancellationToken);
+
+            return Ok(new ApiResponseWithData<CancelledSaleResponse>
+            {
+                Success = true,
+                Message = "Sale Cancelleded successfully",
+                Data = _mapper.Map<CancelledSaleResponse>(response)
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
+            });
+        }
+    }
+
+    [HttpPatch("ItemCancel/{saleItemId}")]
+    public async Task<IActionResult> CancelItem(Guid saleItemId, CancellationToken cancellationToken)
+    {
+        try
+        {
+
+            var command = new CancelledItemCommand() { SaleItemId = saleItemId };
+            var response = await _mediator.Send(command, cancellationToken);
+
+            return Ok(new ApiResponseWithData<CancelledItemResponse>
+            {
+                Success = true,
+                Message = "Item Cancelleded successfully",
+                Data = _mapper.Map<CancelledItemResponse>(response)
+            });
+        }
+        catch (Exception ex)
         {
             return BadRequest(new ApiResponseWithData<CreateSaleResponse>
             {

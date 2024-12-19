@@ -4,7 +4,7 @@ public class Sale
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public int SaleNumber { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
     public string Customer { get; set; }
 
     public decimal TotalAmount { get; private set; }
@@ -13,6 +13,10 @@ public class Sale
     public  ICollection<SaleItem> Items { get; set; } = new List<SaleItem>();
 
     
+    public void UpdateTotalAmount(decimal totalAmout)
+    {
+        TotalAmount = totalAmout;
+    }
 
     public void CalculateTotalAmuntSale()
     {

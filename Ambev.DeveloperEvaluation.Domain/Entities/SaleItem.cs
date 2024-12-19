@@ -7,6 +7,7 @@ public class SaleItem
     public decimal UnitPrice { get; set; }
     public int Quantity { get; set; }
     public decimal Discount { get;private set; }
+    public bool IsCancelled { get; set; }
     public decimal TotalAmount { get; private set; }
 
     public void DiscountCalculate()

@@ -6,8 +6,7 @@ public class CreateSaleResult
     public Guid? Id { get; set; } // Identificador único da venda (usado para atualizações ou consultas)
     public string Customer { get; set; } // Nome do cliente
     public DateTime Date { get; set; } // Data da venda
-    public Guid BranchId { get; set; } // ID da filial (External Identity)
-    public string BranchName { get; set; } // Nome da filial (desnormalizado)
+    public string Branch { get; set; } // ID da filial (External Identity)
     public decimal TotalAmount { get; set; } // Valor total da venda
     public bool IsCancelled { get; set; } // Indicador se a venda foi cancelada
     public List<SaleItemResult> Items { get; set; } // Lista de itens da venda

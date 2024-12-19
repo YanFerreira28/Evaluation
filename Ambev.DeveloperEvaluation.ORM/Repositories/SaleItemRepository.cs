@@ -29,6 +29,14 @@ public class SaleItemRepository : ISaleItemRepository
         return saleItem;
     }
 
+    public async Task CancelSaleItemAsync(Guid saleItemId, CancellationToken cancellationToken = default)
+    {
+        await _context.SaleItems
+            .Where(c => c.Id == saleItemId)
+            .ExecuteUpdateAsync(saleItem => saleItem.SetProperty(c => c.IsCancelled, true));
+
+    }
+
     /// <summary>
     /// Retrieves a user by their unique identifier
     /// </summary>
