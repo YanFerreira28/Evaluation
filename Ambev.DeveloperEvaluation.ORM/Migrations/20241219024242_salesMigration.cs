@@ -6,13 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     /// <inheritdoc />
-    public partial class salesMigration2 : Migration
+    public partial class salesMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("CREATE SEQUENCE sale_number_seq START WITH 1 INCREMENT BY 1");
+            migrationBuilder.Sql("CREATE SEQUENCE sale_number_seq START WITH 1 INCREMENT BY 1 MINVALUE 1 MAXVALUE 999999999");
 
+            migrationBuilder.AddColumn<DateTime>(
+                name: "CreatedAt",
+                table: "Users",
+                type: "timestamp with time zone",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "UpdatedAt",
+                table: "Users",
+                type: "timestamp with time zone",
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Sales",
@@ -32,25 +44,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    Username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SaleItems",
                 columns: table => new
                 {
@@ -59,7 +52,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Product = table.Column<string>(type: "text", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    Discount = table.Column<int>(type: "integer", nullable: false),
+                    Discount = table.Column<decimal>(type: "numeric", nullable: false),
+                    IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
@@ -82,14 +76,21 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DROP SEQUENCE IF EXISTS sale_number_seq");
+
             migrationBuilder.DropTable(
                 name: "SaleItems");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Sales");
+
+            migrationBuilder.DropColumn(
+                name: "CreatedAt",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "UpdatedAt",
+                table: "Users");
         }
     }
 }
