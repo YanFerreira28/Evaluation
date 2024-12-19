@@ -1,10 +1,9 @@
 ﻿using MediatR;
 
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CancelledSale
+namespace Ambev.DeveloperEvaluation.Application.Sale.CancelledSale;
+
+public class CancelledSaleCommand : IRequest<CancelledSaleResult>
 {
-    public class CancelledSaleCommand : IRequest<CancelledSaleResult>
-    {
-        public Guid SaleId { get; set; }
-    }
+    public Guid SaleId { get; set; }
 }

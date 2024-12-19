@@ -29,12 +29,12 @@ public class SaleRepository : ISaleRepository
 
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        return await _context.Sales.Include(c=> c.Items).FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
     public async Task<IList<Sale>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Sales.ToListAsync(cancellationToken);
+        return await _context.Sales.Include(c=> c.Items).ToListAsync(cancellationToken);
     }
 
     public async Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)

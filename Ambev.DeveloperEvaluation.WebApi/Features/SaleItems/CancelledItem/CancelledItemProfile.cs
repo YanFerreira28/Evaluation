@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.CancelledItem;
+﻿using Ambev.DeveloperEvaluation.Application.SaleItem.CancelledItem;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelledItem;

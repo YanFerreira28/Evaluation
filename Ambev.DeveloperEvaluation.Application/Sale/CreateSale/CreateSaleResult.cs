@@ -3,21 +3,21 @@
 
 public class CreateSaleResult
 {
-    public Guid? Id { get; set; } // Identificador único da venda (usado para atualizações ou consultas)
-    public string Customer { get; set; } // Nome do cliente
-    public DateTime Date { get; set; } // Data da venda
-    public string Branch { get; set; } // ID da filial (External Identity)
-    public decimal TotalAmount { get; set; } // Valor total da venda
-    public bool IsCancelled { get; set; } // Indicador se a venda foi cancelada
-    public List<SaleItemResult> Items { get; set; } // Lista de itens da venda
+    public Guid? Id { get; set; } 
+    public string Customer { get; set; } 
+    public DateTime Date { get; set; } 
+    public string Branch { get; set; }
+    public decimal TotalAmount { get; set; } 
+    public bool IsCancelled { get; set; } 
+    public List<SaleItemResult> Items { get; set; } 
 }
 
 
 public class SaleItemResult
 {
-    public string Product { get; set; } // Nome do produto (desnormalizado)
-    public int Quantity { get; set; } // Quantidade do produto vendido
-    public decimal UnitPrice { get; set; } // Preço unitário do produto
-    public decimal Discount { get; set; } // Desconto aplicado ao item
-    public decimal TotalAmount { get; set; } // Valor total do item após desconto
+    public string Product { get; set; } 
+    public int Quantity { get; set; } 
+    public decimal UnitPrice { get; set; } 
+    public decimal Discount { get; set; } 
+    public decimal TotalAmount { get; set; }
 }

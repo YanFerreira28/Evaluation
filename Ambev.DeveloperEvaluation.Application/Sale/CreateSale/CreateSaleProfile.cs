@@ -4,9 +4,6 @@ namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
 
 public class CreateSaleProfile : Profile
 {
-    /// <summary>
-    /// Initializes the mappings for CreateUser operation
-    /// </summary>
     public CreateSaleProfile()
     {
         CreateMap<CreateSaleItemCommand, Domain.Entities.SaleItem>();

@@ -1,7 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.CancelledSale;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CancelledItem;
+namespace Ambev.DeveloperEvaluation.Application.SaleItem.CancelledItem;
 
 public class CancelledItemValidator : AbstractValidator<CancelledItemCommand>
 {

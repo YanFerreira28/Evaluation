@@ -3,7 +3,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CancelledItem;
+namespace Ambev.DeveloperEvaluation.Application.SaleItem.CancelledItem;
 
 public class CancelledItemHandler : IRequestHandler<CancelledItemCommand, CancelledItemResult>
 {

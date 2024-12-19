@@ -1,7 +1,7 @@
 ﻿using MediatR;
 
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CancelledItem;
+namespace Ambev.DeveloperEvaluation.Application.SaleItem.CancelledItem;
 
 public class CancelledItemCommand : IRequest<CancelledItemResult>
 {
