@@ -7,7 +7,7 @@ public class Sale
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public string Customer { get; set; }
 
-    public decimal TotalAmount { get; private set; }
+    public decimal TotalAmount { get;  set; }
     public bool IsCancelled { get; set; }
     public string Branch { get; set; } 
     public  ICollection<SaleItem> Items { get; set; } = new List<SaleItem>();

@@ -2,7 +2,7 @@
 
 
 namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
-    internal class CreateSaleValidator : AbstractValidator<CreateSaleCommand>
+    public class CreateSaleValidator : AbstractValidator<CreateSaleCommand>
     {
         public CreateSaleValidator()
         {

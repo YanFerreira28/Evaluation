@@ -10,6 +10,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetAllSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,7 +51,16 @@ public class SalesController : BaseController
                 Data = _mapper.Map<CreateSaleResponse>(response)
             });
         }
-        catch(Exception ex)
+        catch (ValidationException ex)
+        {
+            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
+            });
+        }
+        catch (Exception ex)
         {
             return BadRequest(new ApiResponseWithData<CreateSaleResponse>
             {
@@ -77,9 +87,18 @@ public class SalesController : BaseController
                 Data = _mapper.Map<CancelledSaleResponse>(response)
             });
         }
+        catch (ValidationException ex)
+        {
+            return BadRequest(new ApiResponseWithData<CancelledSaleResponse>
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
+            });
+        }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
+            return BadRequest(new ApiResponseWithData<CancelledSaleResponse>
             {
                 Success = false,
                 Message = ex.Message,
@@ -107,6 +126,15 @@ public class SalesController : BaseController
                 Success = true,
                 Message = "Sale Updated successfully",
                 Data = _mapper.Map<UpdateSaleResponse>(response)
+            });
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(new ApiResponseWithData<UpdateSaleResponse>
+            {
+                Success = false,
+                Message = ex.Message,
+                Data = null
             });
         }
         catch (Exception ex)

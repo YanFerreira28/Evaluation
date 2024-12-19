@@ -34,6 +34,10 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
             var result = _mapper.Map<UpdateSaleResult>(createdSale);
             return result;
         }
+        catch(ValidationException e)
+        {
+            throw new ValidationException(e.Errors);
+        }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);

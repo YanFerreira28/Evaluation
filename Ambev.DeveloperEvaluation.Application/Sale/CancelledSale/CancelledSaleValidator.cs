@@ -6,6 +6,7 @@ public class CancelledSaleValidator : AbstractValidator<CancelledSaleCommand>
 {
     public CancelledSaleValidator()
     {
-        RuleFor(sale => sale.SaleId).NotNull();
+        RuleFor(sale => sale.SaleId).NotEmpty()
+            .WithMessage("SaleId must not be empty.");
     }
 }

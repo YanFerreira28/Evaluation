@@ -31,6 +31,10 @@ public class CancelledSaleHandler : IRequestHandler<CancelledSaleCommand, Cancel
 
             return new CancelledSaleResult() { SaleId = command.SaleId };
         }
+        catch (ValidationException ex)
+        {
+            throw new ValidationException(ex.Errors);
+        }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);

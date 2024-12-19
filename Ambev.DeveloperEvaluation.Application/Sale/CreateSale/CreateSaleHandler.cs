@@ -38,6 +38,10 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
             var result = _mapper.Map<CreateSaleResult>(createdSale);
             return result;
         }
+        catch (ValidationException ex)
+        {
+            throw new ValidationException(ex.Errors);
+        }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
