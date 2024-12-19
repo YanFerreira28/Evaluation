@@ -37,12 +37,14 @@ public class CancelledItemHandler : IRequestHandler<CancelledItemCommand, Cancel
             await _saleItemRepository.CancelSaleItemAsync(command.SaleItemId, cancellationToken);
             Console.WriteLine($"ItemCancelled: SaleItem ID {command.SaleItemId}");
 
-            //Update total amount sale
-            var sale = await _saleRepository.GetByIdAsync(item.SaleId, cancellationToken);
-            sale.UpdateTotalAmount(sale.TotalAmount - item.TotalAmount);
-            await _saleRepository.UpdateAsync(sale);
-            Console.WriteLine($"SaleModified: Sale ID {command.SaleItemId}");
-
+            if(item.IsCancelled is false)
+            {
+                //Update total amount sale
+                var sale = await _saleRepository.GetByIdAsync(item.SaleId, cancellationToken);
+                sale.UpdateTotalAmount(sale.TotalAmount - item.TotalAmount);
+                await _saleRepository.UpdateAsync(sale);
+                Console.WriteLine($"SaleModified: Sale ID {command.SaleItemId}");
+            }
 
             return new CancelledItemResult() { SaleItemId = command.SaleItemId };
         }
