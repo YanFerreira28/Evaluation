@@ -28,6 +28,9 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
 
             var sale = _mapper.Map<Domain.Entities.Sale>(command);
 
+            sale.CalculateDiscountAndTotalAmountItems();
+            sale.CalculateTotalAmuntSale();
+
             var createdSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
             Console.WriteLine($"SaleCreated: Sale ID {sale.Id}");
 
