@@ -12,7 +12,7 @@ public class SaleItem
 
     public void DiscountCalculate()
     {
-        if (Quantity == 4)
+        if (Quantity >= 4 && Quantity < 10)
             Discount = 10;
 
         if (Quantity >= 10 && Quantity <= 20)
