@@ -22,6 +22,8 @@ public class SaleItemsController : BaseController
     }
 
     [HttpPatch("Cancel/{saleItemId}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<CancelledItemResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CancelItem(Guid saleItemId, CancellationToken cancellationToken)
     {
         try
@@ -39,11 +41,10 @@ public class SaleItemsController : BaseController
         }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<CancelledItemResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }

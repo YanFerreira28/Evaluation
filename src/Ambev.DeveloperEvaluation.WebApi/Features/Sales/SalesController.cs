@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Application.Sale.GetAllSale;
 using Ambev.DeveloperEvaluation.Application.Sale.GetSale;
 using Ambev.DeveloperEvaluation.Application.Sale.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelledItem;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelledSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetAllSale;
@@ -31,6 +32,8 @@ public class SalesController : BaseController
 
 
     [HttpPost]
+    [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateSale(CreateSaleRequest request, CancellationToken cancellationToken)
     {
         try
@@ -51,27 +54,19 @@ public class SalesController : BaseController
                 Data = _mapper.Map<CreateSaleResponse>(response)
             });
         }
-        catch (ValidationException ex)
-        {
-            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
-            {
-                Success = false,
-                Message = ex.Message,
-                Data = null
-            });
-        }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<CreateSaleResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }
 
     [HttpPatch("Cancel/{saleId}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<CancelledSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CancelSale(Guid saleId, CancellationToken cancellationToken)
     {
         try
@@ -87,27 +82,19 @@ public class SalesController : BaseController
                 Data = _mapper.Map<CancelledSaleResponse>(response)
             });
         }
-        catch (ValidationException ex)
-        {
-            return BadRequest(new ApiResponseWithData<CancelledSaleResponse>
-            {
-                Success = false,
-                Message = ex.Message,
-                Data = null
-            });
-        }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<CancelledSaleResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }
 
     [HttpPatch("Update")]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateSale(UpdateSaleRequest request, CancellationToken cancellationToken)
     {
         try
@@ -128,27 +115,19 @@ public class SalesController : BaseController
                 Data = _mapper.Map<UpdateSaleResponse>(response)
             });
         }
-        catch (ValidationException ex)
-        {
-            return BadRequest(new ApiResponseWithData<UpdateSaleResponse>
-            {
-                Success = false,
-                Message = ex.Message,
-                Data = null
-            });
-        }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<UpdateSaleResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }
 
     [HttpGet("{saleId}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetSale(Guid saleId, CancellationToken cancellationToken)
     {
         try
@@ -160,16 +139,17 @@ public class SalesController : BaseController
         }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<GetSaleResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }
 
     [HttpGet()]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetAllSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         try
@@ -181,11 +161,10 @@ public class SalesController : BaseController
         }
         catch (Exception ex)
         {
-            return BadRequest(new ApiResponseWithData<GetAllSaleResponse>
+            return BadRequest(new ApiResponse
             {
                 Success = false,
-                Message = ex.Message,
-                Data = null
+                Message = ex.Message
             });
         }
     }
