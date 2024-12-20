@@ -1,3 +1,10 @@
+Apontamentos:
+ - Avaliar regra de desconto: ajustado regra 4+ itens iguais aplicar 10% de desconto.
+ - Avaliar documentação : ajustado documentação Swagger response endpoints
+ - Avaliar endpoint atualização: ajustado para aplicar regra de desconto + regra de itens
+
+
+
 RODAR MIGRATIONS LOCAL:
 1. COPIAR O CAMINHO DO PROJETO Ambev.DeveloperEvaluation.ORM
 2. EXECUTAR O COMANDO dotnet tool install --global dotnet-ef CASO O DOTNET-EF NÃO ESTEJA INSTALADO
@@ -57,8 +64,6 @@ CANCELAR ITEM DE UMA VENDA:
 TESTES DE UNIDADE:
 
 ![image](https://github.com/user-attachments/assets/2814579a-d511-42c0-b1c6-07a8d4734f8b)
-
-
 
 
 
